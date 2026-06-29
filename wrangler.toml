@@ -1,5 +1,6 @@
-name = "icra-contractors"
+name = "icra-contractors-v1"
 compatibility_date = "2026-06-01"
+workers_dev = false
 
 [assets]
 directory = "./dist"
