@@ -1,0 +1,8 @@
+name = "icra-contractors"
+compatibility_date = "2026-06-01"
+
+[assets]
+directory = "./dist"
+
+[vars]
+SITE_URL = "https://icra.contractors"
