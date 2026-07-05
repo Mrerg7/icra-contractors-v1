@@ -15,8 +15,12 @@ const {
   noindex = false,
 } = Astro.props;
 
+const siteUrl = new URL('/', Astro.site).href;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const siteUrl = 'https://icra.contractors';
+if (!canonicalURL.pathname.endsWith('/')) {
+  canonicalURL.pathname += '/';
+}
+const canonicalHref = canonicalURL.href;
 const siteName = 'ICRA Contractors';
 const contactEmail = 'sales@desertrich.com';
 
@@ -25,7 +29,7 @@ const structuredData = {
   '@graph': [
     {
       '@type': 'WebSite',
-      '@id': `${siteUrl}/#website`,
+      '@id': `${siteUrl}#website`,
       url: siteUrl,
       name: siteName,
       description,
@@ -33,11 +37,11 @@ const structuredData = {
     },
     {
       '@type': 'WebPage',
-      '@id': `${canonicalURL}#webpage`,
-      url: canonicalURL,
+      '@id': `${canonicalHref}#webpage`,
+      url: canonicalHref,
       name: title,
       description,
-      isPartOf: { '@id': `${siteUrl}/#website` },
+      isPartOf: { '@id': `${siteUrl}#website` },
       inLanguage: 'en-US',
       primaryImageOfPage: {
         '@type': 'ImageObject',
@@ -48,7 +52,7 @@ const structuredData = {
       '@type': 'Product',
       name: `${siteName} — Premium Domain Name`,
       description: 'The powerful .contractors domain for a network, directory, or platform of specialized ICRA contractors. Category-defining digital real estate for the infection control construction niche.',
-      url: siteUrl,
+      url: canonicalHref,
       image: image,
       category: 'Domain Name',
       brand: {
@@ -57,7 +61,7 @@ const structuredData = {
       },
       offers: {
         '@type': 'Offer',
-        url: canonicalURL,
+        url: canonicalHref,
         availability: 'https://schema.org/InStock',
         priceCurrency: 'USD',
         price: '25000.00',
@@ -145,13 +149,13 @@ const structuredData = {
   <meta name="google-site-verification" content="z6DAWBZAtdFiu_XXN5c89na9BI6-Z3ji0hq-szjJeos" />
 
   <!-- Canonical -->
-  <link rel="canonical" href={canonicalURL} />
+  <link rel="canonical" href={canonicalHref} />
 
   {noindex && <meta name="robots" content="noindex" />}
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:url" content={canonicalHref} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={image} />
