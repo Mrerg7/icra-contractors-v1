@@ -1,5 +1,5 @@
 name = "icra-contractors-v1"
-main = "src/worker.js"
+main = "src/worker.ts"
 compatibility_date = "2026-06-01"
 workers_dev = false
 
@@ -8,6 +8,7 @@ directory = "./dist"
 binding = "ASSETS"
 not_found_handling = "404-page"
 html_handling = "force-trailing-slash"
+run_worker_first = true
 
 [vars]
-SITE_URL = "https://icra.contractors/"
+SITE_URL = "https://icra.contractors"

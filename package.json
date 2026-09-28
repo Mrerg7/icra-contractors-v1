@@ -1,24 +1,26 @@
 {
   "name": "icra-contractors",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build && node scripts/fix-404-output.mjs",
-    "preview": "astro preview",
+    "dev": "astro dev --port 43127 --host 127.0.0.1",
+    "start": "astro dev --port 43127 --host 127.0.0.1",
+    "build": "astro build",
+    "preview": "astro preview --port 43127 --host 127.0.0.1",
     "astro": "astro",
     "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "astro": "^5.7.0",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.4",
+    "astro": "^5.7.0",
     "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250620.0",
     "@types/node": "^22.10.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "wrangler": "^4.20.0"
   }
 }

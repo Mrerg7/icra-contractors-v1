@@ -6,34 +6,51 @@ export interface Props {
   description?: string;
   image?: string;
   noindex?: boolean;
+  extraSchema?: Record<string, unknown>[];
 }
 
 const {
-  title = "icra.contractors — Premium Domain for ICRA Contractors | Healthcare Construction Network",
-  description = "Acquire icra.contractors — the powerful .contractors domain for a network, directory, or platform of specialized ICRA contractors. The perfect brand for connecting hospitals and GCs with trained infection control construction professionals.",
-  image = "https://imagedelivery.net/-sPAUAWeA405NiWJ0SNIQA/ccb64e0e-1b98-4243-8d2d-d111a277bb00/public",
+  title = 'icra.contractors — Premium Domain for ICRA Contractors | Healthcare Construction Network',
+  description =
+    'Acquire icra.contractors — the powerful .contractors domain for a network, directory, or platform of specialized ICRA contractors. Connect hospitals and GCs with trained infection control construction professionals.',
+  image = 'https://imagedelivery.net/-sPAUAWeA405NiWJ0SNIQA/ccb64e0e-1b98-4243-8d2d-d111a277bb00/public',
   noindex = false,
+  extraSchema = [],
 } = Astro.props;
 
-const siteUrl = new URL('/', Astro.site).href;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const siteUrl = Astro.site?.href.replace(/\/$/, '') ?? 'https://icra.contractors';
+const canonicalURL = new URL(Astro.url.pathname, `${siteUrl}/`);
 if (!canonicalURL.pathname.endsWith('/')) {
   canonicalURL.pathname += '/';
 }
 const canonicalHref = canonicalURL.href;
 const siteName = 'ICRA Contractors';
+const imageAlt = 'icra.contractors — premium .contractors domain for ICRA contractor networks';
 const contactEmail = 'sales@desertrich.com';
+const askingPrice = '45000.00';
 
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
     {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'Desert Rich',
+      url: 'https://desertrich.com',
+      email: contactEmail,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/favicon.svg`,
+      },
+    },
+    {
       '@type': 'WebSite',
-      '@id': `${siteUrl}#website`,
-      url: siteUrl,
+      '@id': `${siteUrl}/#website`,
+      url: `${siteUrl}/`,
       name: siteName,
       description,
       inLanguage: 'en-US',
+      publisher: { '@id': `${siteUrl}/#organization` },
     },
     {
       '@type': 'WebPage',
@@ -41,20 +58,28 @@ const structuredData = {
       url: canonicalHref,
       name: title,
       description,
-      isPartOf: { '@id': `${siteUrl}#website` },
+      isPartOf: { '@id': `${siteUrl}/#website` },
+      about: {
+        '@type': 'Thing',
+        name: 'Infection Control Risk Assessment (ICRA) contractors',
+      },
       inLanguage: 'en-US',
       primaryImageOfPage: {
         '@type': 'ImageObject',
         url: image,
+        caption: imageAlt,
       },
     },
     {
       '@type': 'Product',
-      name: `${siteName} — Premium Domain Name`,
-      description: 'The powerful .contractors domain for a network, directory, or platform of specialized ICRA contractors. Category-defining digital real estate for the infection control construction niche.',
-      url: canonicalHref,
-      image: image,
-      category: 'Domain Name',
+      '@id': `${siteUrl}/#domain`,
+      name: 'icra.contractors — Premium Domain Name',
+      description:
+        'The powerful .contractors domain for a network, directory, or platform of specialized ICRA contractors. Category-defining digital real estate for the infection control construction niche.',
+      url: `${siteUrl}/`,
+      image,
+      category: 'Domain Names',
+      sku: 'icra-contractors-domain',
       brand: {
         '@type': 'Brand',
         name: siteName,
@@ -64,26 +89,18 @@ const structuredData = {
         url: canonicalHref,
         availability: 'https://schema.org/InStock',
         priceCurrency: 'USD',
-        price: '25000.00',
-        priceSpecification: {
-          '@type': 'PriceSpecification',
-          price: '25000.00',
-          priceCurrency: 'USD',
-          minPrice: '25000.00',
-          maxPrice: '125000.00',
-        },
-        seller: {
-          '@type': 'Organization',
-          name: 'Desert Rich',
-          email: contactEmail,
-        },
+        price: askingPrice,
+        itemCondition: 'https://schema.org/NewCondition',
+        priceValidUntil: '2027-12-31',
+        seller: { '@id': `${siteUrl}/#organization` },
         hasMerchantReturnPolicy: {
           '@type': 'MerchantReturnPolicy',
           applicableCountry: 'US',
           returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
           merchantReturnDays: 0,
           name: 'No Returns',
-          description: 'Due to the nature of digital domain name assets, returns are not applicable after transfer.',
+          description:
+            'Due to the nature of digital domain name assets, returns are not applicable after transfer.',
         },
         shippingDetails: {
           '@type': 'OfferShippingDetails',
@@ -113,26 +130,8 @@ const structuredData = {
           },
         },
       },
-      review: {
-        '@type': 'Review',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: '5',
-          bestRating: '5',
-        },
-        author: {
-          '@type': 'Organization',
-          name: 'Desert Rich',
-        },
-      },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '5',
-        bestRating: '5',
-        ratingCount: 1,
-        reviewCount: 1,
-      },
     },
+    ...extraSchema,
   ],
 };
 ---
@@ -141,44 +140,49 @@ const structuredData = {
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta name="author" content="Desert Rich" />
+  <meta name="keywords" content="ICRA contractors, infection control risk assessment, healthcare construction contractors, ICRA network, ICRA directory, domain for sale, icra.contractors" />
 
-  <!-- Google Site Verification -->
   <meta name="google-site-verification" content="z6DAWBZAtdFiu_XXN5c89na9BI6-Z3ji0hq-szjJeos" />
 
-  <!-- Canonical -->
   <link rel="canonical" href={canonicalHref} />
 
-  {noindex && <meta name="robots" content="noindex" />}
+  <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+  <meta name="theme-color" content="#0D9488" />
+  <meta name="format-detection" content="telephone=no" />
 
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content={canonicalHref} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={image} />
+  <meta property="og:image:alt" content={imageAlt} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:site_name" content={siteName} />
   <meta property="og:locale" content="en_US" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={image} />
+  <meta name="twitter:image:alt" content={imageAlt} />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 </head>
-<body class="bg-icra-surface text-slate-900 font-sans antialiased">
+<body class="bg-icra-surface text-icra-ink font-sans antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[60] focus:bg-white focus:text-icra-deep focus:px-4 focus:py-2 focus:rounded-full focus:shadow-lg focus:font-semibold focus:text-sm">
+    Skip to content
+  </a>
   <slot />
 </body>
 </html>

@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /index.html
+Disallow: /404
+Disallow: /404/
 Disallow: /404.html
 
 Sitemap: https://icra.contractors/sitemap-index.xml
